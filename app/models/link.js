@@ -4,10 +4,11 @@ var mongoose = require('mongoose');
 
 
 var linkSchema = mongoose.Schema({
-  url:  {type: String, required: true},
-  base_url: {type: String, required: true},
+  //url:  {type: String, required: true},
+  url:  String,
+  base_url: String,
   code: String,
-  title: {type: String, required: true},
+  title: String,
   visits: Number
 });
 
