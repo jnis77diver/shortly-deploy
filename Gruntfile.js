@@ -3,6 +3,9 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      options: {
+        separator: ';'
+      },
       dist: {
         src: [
           'public/lib/jquery.js',
@@ -45,7 +48,12 @@ module.exports = function(grunt) {
 
     jshint: {
       files: [
-        'public/client/*.js'
+        'Gruntfile.js',
+        'public/client/*.js',
+        'app/**/ *.js',
+        'lib/**/*.js',
+        './*.js',
+        'spec/**/*.js'
       ],
       options: {
         force: 'true',
@@ -66,6 +74,9 @@ module.exports = function(grunt) {
     },
 
     watch: {
+      options: {
+        livereload: true
+      },
       scripts: {
         files: [
           'public/client/**/*.js',
@@ -74,18 +85,30 @@ module.exports = function(grunt) {
         tasks: [
           'concat',
           'uglify'
-        ]
+        ],
+        options: {
+          spawn: false
+        }
       },
       css: {
         files: 'public/*.css',
-        tasks: ['cssmin']
+        tasks: ['cssmin'],
+        options:{
+          spawn: false
+        }
       }
     },
 
     shell: {
       prodServer: {
+        command: 'git push azure master',
+        options: {
+          stdout: true,
+          stderr: true,
+          failOnError: true
+        }
       }
-    },
+    }
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -115,25 +138,28 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
 
   grunt.registerTask('test', [
+    'jshint',
     'mochaTest'
   ]);
 
-  grunt.registerTask('build', [
-  ]);
+  grunt.registerTask('build', ['concat', 'uglify', 'cssmin' ]);
 
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
       // add your production server task here
+      grunt.task.run([ 'shell:prodServer' ])
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
   });
 
-  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'cssmin']);
-
+  //grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'cssmin']);
 
   grunt.registerTask('deploy', [
     // add your deploy tasks here
+    'test',
+    'build',
+    'upload'
   ]);
 
 

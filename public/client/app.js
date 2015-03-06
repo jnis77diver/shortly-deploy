@@ -38,3 +38,6 @@ window.Shortly = Backbone.View.extend({
       .addClass('selected');
   }
 });
+
+//yeah, here we go
+//Jack is awesome

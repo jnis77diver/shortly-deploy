@@ -1,7 +1,40 @@
 var db = require('../config');
 var bcrypt = require('bcrypt-nodejs');
-var Promise = require('bluebird');
+var bluebird = require('bluebird');
+var mongoose = require('mongoose');
 
+var userSchema = mongoose.Schema({
+  username:  {type: String, required: true, index: {unique: true }},
+  password: {type: String, required: true},
+});
+
+var User = mongoose.model('User', userSchema);
+
+
+
+userSchema.pre('save', function(next) {
+  var cipher = bluebird.promisify(bcrypt.hash);
+  return cipher(this.password, null, null).bind(this)
+    .then(function(hash) {
+      this.password = hash;
+      next();
+    });
+});
+
+User.comparePassword = function(candidatePassword, savedPassword, callback) {
+  bcrypt.compare(candidatePassword, savedPassword, function(err, isMatch) {
+    if( err ) return callback(err);
+    callback(null, isMatch);
+  });
+};
+
+var User = mongoose.model('User', userSchema);
+
+
+module.exports = User;
+
+//CODE BELOW IS FROM OLD IMPLEMENTATION WITH BOOKSHELF/SEQUELIZE
+/*
 var User = db.Model.extend({
   tableName: 'users',
   hasTimestamps: true,
@@ -20,6 +53,4 @@ var User = db.Model.extend({
         this.set('password', hash);
       });
   }
-});
-
-module.exports = User;
+});*/
