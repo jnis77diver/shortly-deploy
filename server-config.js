@@ -16,6 +16,16 @@ app.configure(function() {
   app.use(express.session());
 });
 
+////SESSION ////
+var session = require('express-session');
+app.use(session({
+  secret: 'shhh, it\'s a secret',
+  resave: false,
+  saveUninitialized: true
+}));
+
+
+
 app.get('/', util.checkUser, handler.renderIndex);
 app.get('/create', util.checkUser, handler.renderIndex);
 

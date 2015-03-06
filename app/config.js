@@ -1,7 +1,11 @@
 //var Bookshelf = require('bookshelf');
 var mongoose = require('mongoose');
 
-mongoURI = process.env.CUSTOMCONNSTR_MONGOLAB_URI || 'mongodb://localhost/shortlydb';
+
+mongoURI = 'mongodb://jnis19:D7P}]x2wHm5u`tp@ds041177.mongolab.com:41177/shortlydb' || 'mongodb://localhost/shortlydb';
+
+//mongoURI = process.env.CUSTOMCONNSTR_MONGOLAB_URI || 'mongodb://localhost/shortlydb';
+
 mongoose.connect(mongoURI);
 
 var db = mongoose.connection;

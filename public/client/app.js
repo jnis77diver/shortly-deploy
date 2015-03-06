@@ -39,5 +39,5 @@ window.Shortly = Backbone.View.extend({
   }
 });
 
-//yeah, here we go
-//Jack is awesome
+
+

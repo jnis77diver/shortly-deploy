@@ -1,4 +1,11 @@
 module.exports = function(grunt) {
+  var config = {
+    dist: 'public/dist',
+    client: 'public/client',
+    lib: 'public/lib',
+    views: 'views',
+    css: 'public'
+  };
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -74,10 +81,18 @@ module.exports = function(grunt) {
     },
 
     watch: {
+      bower: {
+        files: ['bower.json'],
+        tasks: ['wiredep']
+      },
       options: {
         livereload: true
       },
       scripts: {
+        bower: {
+          files: ['bower.json'],
+          tasks: ['wiredep']
+        },
         files: [
           'public/client/**/*.js',
           'public/lib/**/*.js',
@@ -99,6 +114,36 @@ module.exports = function(grunt) {
       }
     },
 
+    //For use with bower.json install dependencies
+    //wiredep: {
+    //  app: {
+    //    ignorePath: /^\/|\.\.\//,
+    //    src: ['<%= config.app %>/*.ejs'],
+    //    exclude: ['bower_components/bootstrap/dist/js/bootstrap.js']
+    //  }
+    //},
+
+    // Reads HTML for usemin blocks to enable smart builds that automatically
+    // concat, minify and revision files. Creates configurations in memory so
+    // additional tasks can operate on them
+    useminPrepare: {
+      options: {
+        dest: 'public/dist'
+      },
+      html: 'views/{,*/}*.ejs '
+    },
+
+    // Performs rewrites based on rev and the useminPrepare configuration
+    usemin: {
+      options: {
+        assetsDirs: [
+          'public/dist',
+        ]
+      },
+      html: ['views/{,*/}*.ejs'],
+      css: ['client/{,*/}*.css']
+    },
+
     shell: {
       prodServer: {
         command: 'git push azure master',
@@ -111,6 +156,8 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-wiredep');
+  grunt.loadNpmTasks('grunt-usemin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -119,6 +166,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
+
+
 
   grunt.registerTask('server-dev', function (target) {
     // Running nodejs in a different process and displaying output on the main console
@@ -142,7 +191,9 @@ module.exports = function(grunt) {
     'mochaTest'
   ]);
 
-  grunt.registerTask('build', ['concat', 'uglify', 'cssmin' ]);
+  grunt.registerTask('build', ['useminPrepare','concat', 'uglify', 'cssmin', 'usemin' ]);
+
+  //grunt.option('prod', true);
 
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
@@ -157,7 +208,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
     // add your deploy tasks here
-    'test',
+    //'test',
     'build',
     'upload'
   ]);

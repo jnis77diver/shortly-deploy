@@ -9,7 +9,8 @@ var linkSchema = mongoose.Schema({
   base_url: String,
   code: String,
   title: String,
-  visits: Number
+  visits: Number,
+  username: String
 });
 
 var Link = mongoose.model('Link', linkSchema);

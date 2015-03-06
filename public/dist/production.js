@@ -9787,8 +9787,7 @@ if ( typeof module === "object" && module && typeof module.exports === "object" 
 }
 
 })( window );
-
-//     Underscore.js 1.5.2
+;//     Underscore.js 1.5.2
 //     http://underscorejs.org
 //     (c) 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 //     Underscore may be freely distributed under the MIT license.
@@ -11064,8 +11063,7 @@ if ( typeof module === "object" && module && typeof module.exports === "object" 
   });
 
 }).call(this);
-
-//     Backbone.js 1.1.0
+;//     Backbone.js 1.1.0
 
 //     (c) 2010-2011 Jeremy Ashkenas, DocumentCloud Inc.
 //     (c) 2011-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -12646,8 +12644,7 @@ if ( typeof module === "object" && module && typeof module.exports === "object" 
   };
 
 }).call(this);
-
-/*
+;/*
 
 Copyright (C) 2011 by Yehuda Katz
 
@@ -14925,8 +14922,7 @@ Handlebars.template = Handlebars.VM.template;
 // lib/handlebars/browser-suffix.js
 })(Handlebars);
 ;
-
-window.Shortly = Backbone.View.extend({
+;window.Shortly = Backbone.View.extend({
   template: Templates.layout,
 
   events: {
@@ -14967,16 +14963,16 @@ window.Shortly = Backbone.View.extend({
   }
 });
 
-Shortly.Link = Backbone.Model.extend({
+
+
+;Shortly.Link = Backbone.Model.extend({
   urlRoot: '/links'
 });
-
-Shortly.Links = Backbone.Collection.extend({
+;Shortly.Links = Backbone.Collection.extend({
   model: Shortly.Link,
   url: '/links'
 });
-
-Shortly.LinkView = Backbone.View.extend({
+;Shortly.LinkView = Backbone.View.extend({
   className: 'link',
 
   template: Templates.link,
@@ -14987,8 +14983,7 @@ Shortly.LinkView = Backbone.View.extend({
     return this;
   }
 });
-
-Shortly.LinksView = Backbone.View.extend({
+;Shortly.LinksView = Backbone.View.extend({
   className: 'links',
 
   initialize: function(){
@@ -15010,8 +15005,7 @@ Shortly.LinksView = Backbone.View.extend({
     this.$el.append(view.render().el);
   }
 });
-
-Shortly.createLinkView = Backbone.View.extend({
+;Shortly.createLinkView = Backbone.View.extend({
   className: 'creator',
 
   template: Templates.create,
@@ -15066,8 +15060,7 @@ Shortly.createLinkView = Backbone.View.extend({
       .removeClass('error');
   }
 });
-
-Shortly.Router = Backbone.Router.extend({
+;Shortly.Router = Backbone.Router.extend({
   initialize: function(options){
     this.$el = options.el;
   },
